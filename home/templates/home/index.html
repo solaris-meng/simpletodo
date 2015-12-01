@@ -1,0 +1,43 @@
+
+{% extends "home/base.html" %}
+{% load staticfiles %}
+
+{% block customcss %}
+<link type="text/css" rel="stylesheet" href="{% static 'home.css' %}"/>
+{% endblock %}
+
+{% block content %}
+<div class="home-main-con">
+    <div class="home-main-tl">
+        <p>一个简单的Todo</p>
+    </div>
+</div>
+
+<!--
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="home-service-tl">
+                <p>最简，回归根本</p>
+            </div>
+            <div class="home-service-it">
+                <ul>
+                    <li>
+                        <p>只有"时间"和"内容"</p>
+                    </li>
+                    <li>
+                        <p>只有"完成"或者"放弃"</p>
+                    </li>
+                    <li>
+                        <p>没有优先级，不能修改</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+
+{% endblock %}
+
+

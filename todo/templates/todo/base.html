@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+{% load staticfiles %}
+<head>
+    <title>Simple Todo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link type="text/css" rel="stylesheet" href="{% static 'todo/bootstrap.min.css' %}"/>
+
+    {% block customcss %}
+    {% endblock %}
+
+</head>
+
+<!-- 
+The #page-top ID is part of the scrolling feature.
+The data-spy and data-target are part of the built-in Bootstrap scrollspy function.
+-->
+<body>
+<div class="index-wrapper">
+
+{% block nav %}
+<nav class="nav-index navbar navbar-default ">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand nav-brand" href="/">SimpleTodo</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right index-nav-it">
+        {% if user.is_authenticated %}
+        <li><a href="/todo">Todo</a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }}<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li role="separator" class="divider"></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </li>
+        {% else %}
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        {% endif %}
+    
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+<div class="push"></div>
+</div><!-- end index-wrapper -->
+
+{% block footer %}
+<div class="container-fluid footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="text-center">2015 © All Rights Reserved, www.meng.wiki</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<script type="text/javascript" src="{% static 'todo/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'todo/bootstrap.min.js' %}"></script>
+
+{% block customjs %}
+{% endblock %}
+
+</body>
+</html>

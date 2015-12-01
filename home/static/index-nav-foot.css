@@ -1,0 +1,62 @@
+
+
+* {
+    margin: 0;
+}
+p {
+    color: rgb(86, 90, 92);
+}
+html, body {
+    height: 100%;
+/*
+    background-color: rgb(237, 239, 237);
+*/
+}
+.index-wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* margin: 0 auto -220px; the bottom margin is the negative value of the footer's height */
+}
+
+.nav-index {
+    margin: 0 0;
+    background-color: rgb(12, 75, 51);
+    background-color: rgb(237, 239, 237);
+    background-color: rgb(111, 84, 153);/* pink */
+    background-color: rgba(68,68,68,1);
+    border: 0px;
+    border-radius: 0px;
+}
+.nav-index .navbar-brand{
+    color: white;
+}
+.nav-index .index-nav-it .dropdown .dropdown-menu{
+    background-color: rgba(68,68,68,1);
+}
+.nav-index .index-nav-it li a {
+    font-size: 25px;
+    color: white;
+}
+.nav-brand {
+    font-size: 30px;
+    color: white;
+}
+
+/* footer */
+.footer{
+    background-color: white;
+    background-color: rgb(237, 239, 237);
+}
+.footer h2{
+    color: rgb(86, 90, 92);
+}
+/*
+.footer-bg, .copyright-tl {
+    background-color: white;
+}
+*/
+.copyright-tl p{
+    font-size: 20px;
+    text-align: center;
+}

@@ -1,0 +1,32 @@
+
+body,html{height:100%;}
+.index-wrapper {
+    height: 100%;
+    width: 100%;
+}
+
+.home-main-con {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    /* background-color: red; */
+}
+.home-main-tl {
+    top: 30%;
+    position: relative;
+}
+.home-main-tl p{
+    font-size: 40px;
+    vertical-align:middle;
+    font-weight: bold;
+    text-align: center;
+}
+.home-service-tl p{
+    font-size: 30px;
+    line-height: 50px;
+    text-align: center;
+}
+.home-service-it p{
+    font-size: 20px;
+    text-align: left;
+}

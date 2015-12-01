@@ -1,0 +1,181 @@
+
+{% extends "simpletodo/base.html" %}
+{% load staticfiles %}
+
+{% block customcss %}
+<link type="text/css" rel="stylesheet" href="{% static 'todo.css' %}"/>
+<link type="text/css" rel="stylesheet" href="{% static 'jquery-ui.css' %}"/>
+{% endblock %}
+
+{% block content %}
+
+<!--=== Content Part ===-->    
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 user-view-title">
+            <p>Get Things Done</p>
+        </div>
+
+        <div class="col-lg-12">
+            <form action="/todo/add" class="form-horizontal" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3 todo-form-tl">
+                            <p>Todo:</p>
+                        </div>
+                        <div class="col-md-6 dqadmin-config-it2">
+                            <textarea name="todo-content" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 todo-form-tl">
+                            <p>Start:</p>
+                        </div>
+                        <div class="col-md-6 todo-form-tl">
+                            <input name="datepicker-start" type="text">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 todo-form-tl">
+                            <p>End:</p>
+                        </div>
+                        <div class="col-md-6 todo-form-tl">
+                            <input name="datepicker-end" type="text">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 todo-form-tl">
+                        </div>
+                        <div class="col-md-6 todo-form-tl">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg-12">
+            <table class="table table-hover">
+                <tr>
+                    <th>Todo</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Status</th>
+                    <th>Operation</th>
+                </tr>
+
+                {% for i in todo %}
+                <tr>
+                    <td>{{ i.content }}</td>
+                    <td>{{ i.str_start }}</td>
+                    <td>{{ i.str_end }}</td>
+                    <td id="{{ i.id }}">
+                        {% if i.status == 'to do' %}
+                            <button class="btn btn-warning">{{ i.status }}</button>
+                        {% elif i.status == 'done' %}
+                            <button class="btn btn-success">{{ i.status }}</button>
+                        {% elif i.status == 'abort' %}
+                            <button class="btn btn-danger">{{ i.status }}</button>
+                        {% endif %}
+                        {{ i.id }}
+                    </td>
+                    <td id='opt{{ i.id }}'>
+                        {% if i.status == 'to do' %}
+                        <button name='todo' type="submit" formaction="/todo/{{ i.id }}/done" formmethod="get" class="btn btn-success">Yes, I done.</button>
+                        <button name='todo' type="submit" formaction="/todo/{{ i.id }}/abort" formmethod="get" class="btn btn-danger">No, I give up.</button>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    </div><!-- end row -->
+</div><!-- end container -->
+
+<!--=== Content Part ===-->    
+{% endblock %}
+
+{% block customjs %}
+<script src="{% static 'jquery-ui.min.js' %}"></script>
+<script>
+  $(function() {
+    $("input[name^='datepicker']" ).datepicker();
+  });
+</script>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        $("button[name='todo']").click(function(){
+            var action = $(this).attr("formaction");
+            var wds = action.split('/')
+            var tid = wds[2];
+            $.get(action, function(data){
+                //alert(data['result']);
+                var tstatus = data['status'];
+                var new_btn = "";
+                if (tstatus == 'done') {
+                    new_btn = '<button class="btn btn-success">'+tstatus+'</button>';
+                } else {
+                    new_btn = '<button class="btn btn-danger">'+tstatus+'</button>';
+                }
+                $('#'+tid).html(new_btn);
+                $('#opt'+tid).html('');
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+// using jQuery
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
+    $('form').submit(function(e) {    
+        var formData = new FormData($(this)[0]); 
+        var action_str = $(this).attr('action');
+        //alert('submit form:'+action_str);
+
+        $.ajax({
+            url: action_str,
+            data: formData,
+            cache: false,
+            async: false,
+            type: "POST",
+            contentType: false,
+            processData: false,
+            //Ajax events
+            success: function(data) {
+                alert(data['result']);
+            }
+        });
+        e.preventDefault();
+    });
+</script>
+{% endblock %}
+

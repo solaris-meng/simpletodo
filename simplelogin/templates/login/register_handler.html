@@ -1,0 +1,32 @@
+
+{% extends "index/base.html" %}
+{% load staticfiles %}
+
+{% block customcss %}
+<link type="text/css" rel="stylesheet" href="{% static 'login.css' %}"/>
+{% endblock %}
+
+{% block content %}
+
+<!--=== Content Part ===-->    
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 register-tl">
+            <p>注册成功，<span id="totalSecond">5</span>秒后跳转到登陆界面</p>
+        </div>
+    </div><!-- end row -->
+</div><!-- end container -->
+
+<!--=== Content Part ===-->    
+{% endblock %}
+
+{% block customjs %}
+<script language="javascript" type="text/javascript"> 
+    var second = totalSecond.innerText; 
+    setInterval("redirect()", 1000); 
+    function redirect(){ 
+    totalSecond.innerText=--second; 
+    if(second<0) location.href='/login'; 
+    } 
+</script>
+{% endblock %}
